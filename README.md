@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -14,3 +15,27 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+=======
+# Digital Enigma - Database Setup
+
+## Setup Instructions
+
+1. Create database:
+   CREATE DATABASE digital_enigma;
+
+2. Run schema:
+   psql -U postgres -d digital_enigma -f schema.sql
+
+3. Insert puzzles:
+   psql -U postgres -d digital_enigma -f seed.sql
+
+## Tables
+- players
+- puzzles
+- attempts
+- leaderboard (view)
+
+## Notes
+- PostgreSQL required
+- Default port: 5432
+>>>>>>> 40a20437384b66112f616f5655a53b21d98c4b80

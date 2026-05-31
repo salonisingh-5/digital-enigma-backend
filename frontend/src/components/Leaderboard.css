@@ -1,0 +1,127 @@
+.leaderboard-panel {
+  background: var(--bg-card);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: 100%;
+}
+
+.lb-header {
+  margin-bottom: 16px;
+}
+
+.lb-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--neon-purple-bright);
+  letter-spacing: 2px;
+  text-shadow: 0 0 12px rgba(168,85,247,0.5);
+}
+
+.lb-cols {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 8px;
+  padding: 0 4px 10px;
+  border-bottom: 1px solid var(--border-dim);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+}
+
+.lb-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4px;
+  flex: 1;
+}
+
+.lb-row {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 9px 4px;
+  border-bottom: 1px solid var(--border-dim);
+  transition: background 0.15s;
+  border-radius: 4px;
+}
+
+.lb-row:hover { background: rgba(255,255,255,0.03); }
+
+.lb-row--me {
+  background: rgba(139, 92, 246, 0.08);
+  border-radius: 6px;
+  border-color: transparent;
+}
+
+.lb-medal {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid currentColor;
+}
+
+.lb-rank-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.lb-name {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.lb-name--me {
+  color: var(--neon-purple-bright);
+  font-weight: 600;
+}
+
+.lb-tokens {
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+.lb-tokens--me {
+  color: var(--neon-purple-bright);
+  font-weight: 700;
+}
+
+.lb-view-all {
+  margin-top: 14px;
+  width: 100%;
+  padding: 11px 0;
+  background: transparent;
+  border: 1px solid var(--neon-purple);
+  border-radius: 6px;
+  color: var(--neon-purple-bright);
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lb-view-all:hover {
+  background: var(--neon-purple);
+  color: #fff;
+  box-shadow: var(--glow-purple);
+}

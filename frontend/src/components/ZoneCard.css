@@ -1,0 +1,177 @@
+.zone-card {
+  position: relative;
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid;
+  padding: 28px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.zone-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Color variants */
+.zone-card--purple { border-color: var(--border-purple); }
+.zone-card--purple:hover { box-shadow: var(--glow-purple); }
+
+.zone-card--cyan { border-color: var(--border-cyan); }
+.zone-card--cyan:hover { box-shadow: var(--glow-cyan); }
+
+.zone-card--orange { border-color: var(--border-orange); }
+.zone-card--orange:hover { box-shadow: var(--glow-orange); }
+
+.zone-card--green { border-color: var(--border-green); }
+.zone-card--green:hover { box-shadow: var(--glow-green); }
+
+/* Sweep animation */
+.zone-card__sweep {
+  position: absolute;
+  top: 0; left: -100%; bottom: 0;
+  width: 60%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+  pointer-events: none;
+}
+.zone-card:hover .zone-card__sweep {
+  animation: scanline-sweep 1.2s ease forwards;
+}
+
+/* Corner accents */
+.corner {
+  position: absolute;
+  width: 10px; height: 10px;
+  border-color: inherit;
+  border-style: solid;
+}
+.corner--tl { top: 6px; left: 6px;  border-width: 1.5px 0 0 1.5px; }
+.corner--tr { top: 6px; right: 6px; border-width: 1.5px 1.5px 0 0; }
+.corner--bl { bottom: 6px; left: 6px;  border-width: 0 0 1.5px 1.5px; }
+.corner--br { bottom: 6px; right: 6px; border-width: 0 1.5px 1.5px 0; }
+
+/* Icon */
+.zone-card__icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 4px;
+  animation: float 5s ease-in-out infinite;
+}
+.zone-card__icon svg { width: 100%; height: 100%; }
+
+/* Text */
+.zone-card__label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.zone-card__desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  min-height: 40px;
+}
+
+.zone-card__count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Buttons */
+.zone-card__btn {
+  margin-top: 6px;
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 6px;
+  border: 1.5px solid;
+  background: transparent;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.zone-card__btn--purple {
+  border-color: var(--neon-purple);
+  color: var(--neon-purple-bright);
+}
+.zone-card__btn--purple:hover {
+  background: var(--neon-purple);
+  color: #fff;
+  box-shadow: var(--glow-purple);
+}
+
+.zone-card__btn--cyan {
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan-bright);
+}
+.zone-card__btn--cyan:hover {
+  background: var(--neon-cyan);
+  color: #000;
+  box-shadow: var(--glow-cyan);
+}
+
+.zone-card__btn--orange {
+  border-color: var(--neon-orange);
+  color: var(--neon-orange-bright);
+}
+.zone-card__btn--orange:hover {
+  background: var(--neon-orange);
+  color: #fff;
+  box-shadow: var(--glow-orange);
+}
+
+.zone-card__btn--green {
+  border-color: var(--neon-green);
+  color: var(--neon-green-bright);
+}
+.zone-card__btn--green:hover {
+  background: var(--neon-green);
+  color: #000;
+  box-shadow: var(--glow-green);
+}
+
+/* Progress additions */
+.zone-card__progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.zone-card__solved {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.zone-card__bar-track {
+  width: 100%;
+  height: 3px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.zone-card__bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+.zone-card__bar-fill--purple { background: var(--neon-purple); }
+.zone-card__bar-fill--cyan   { background: var(--neon-cyan); }
+.zone-card__bar-fill--orange { background: var(--neon-orange); }
+.zone-card__bar-fill--green  { background: var(--neon-green); }
+
+.zone-card--complete { opacity: 0.8; }

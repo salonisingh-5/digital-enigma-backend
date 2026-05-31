@@ -1,0 +1,9 @@
+#ifndef DB_H
+#define DB_H
+
+#include <libpq-fe.h>
+
+PGconn* connect_db();
+void    close_db(PGconn *conn);
+
+#endif

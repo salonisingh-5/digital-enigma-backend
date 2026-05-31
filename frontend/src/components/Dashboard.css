@@ -1,0 +1,82 @@
+.dashboard {
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.dashboard-main {
+  margin-top: var(--header-height);
+  margin-left: var(--sidebar-width);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: calc(100vh - var(--header-height));
+}
+
+/* Zone section header */
+.zone-section-header {
+  text-align: center;
+  padding: 8px 0 4px;
+}
+
+.zone-section-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 3px;
+  margin-bottom: 6px;
+}
+
+.zone-section-sub {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+/* Top row: zones + leaderboard */
+.dashboard-top-row {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 20px;
+  align-items: start;
+}
+
+.zones-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.leaderboard-slot {
+  height: 100%;
+}
+
+/* Bottom row: AI chat + stats + activity */
+.dashboard-bottom-row {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.ai-slot,
+.stats-slot,
+.activity-slot {
+  min-height: 260px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .zones-grid { grid-template-columns: repeat(2, 1fr); }
+  .dashboard-top-row { grid-template-columns: 1fr; }
+  .dashboard-bottom-row { grid-template-columns: 1fr 1fr; }
+  .activity-slot { grid-column: 1 / -1; }
+}
+
+@media (max-width: 768px) {
+  .dashboard-main { margin-left: 0; padding: 16px; }
+  .zones-grid { grid-template-columns: 1fr; }
+  .dashboard-bottom-row { grid-template-columns: 1fr; }
+}
