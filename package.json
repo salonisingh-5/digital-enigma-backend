@@ -1,0 +1,29 @@
+{
+  "name": "digital-enigma-backend",
+  "version": "1.0.0",
+  "description": "1. Create database:\r    CREATE DATABASE digital_enigma;",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salonisingh-5/digital-enigma-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/salonisingh-5/digital-enigma-backend/issues"
+  },
+  "homepage": "https://github.com/salonisingh-5/digital-enigma-backend#readme",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.16.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.21.0"
+  }
+}
