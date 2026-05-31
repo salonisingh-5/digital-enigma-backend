@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
 import './Login.css';
 
-export default function Login({ onLogin, error }) {
+export default function Login({ onLogin, onRegister, error, isLoading }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isRegisterMode, setIsRegisterMode] = useState(false);
 
   const handleSubmit = () => {
     if (!username.trim() || !password.trim()) return;
-    onLogin && onLogin({ username: username.trim(), password });
+    if (isRegisterMode) {
+      onRegister && onRegister({ username: username.trim(), password });
+    } else {
+      onLogin && onLogin({ username: username.trim(), password });
+    }
   };
 
   return (
     <div className="login-page">
-      {/* Background grid already set in body::before */}
-
       <div className="login-box">
-        {/* Corner accents */}
         <span className="lc lc--tl" /><span className="lc lc--tr" />
         <span className="lc lc--bl" /><span className="lc lc--br" />
 
-        {/* Logo */}
         <div className="login-logo">
           <div className="login-logo-icon">
             <svg viewBox="0 0 60 60" fill="none">
@@ -38,9 +39,10 @@ export default function Login({ onLogin, error }) {
 
         <div className="login-divider" />
 
-        <div className="login-form-title">INITIATE ACCESS</div>
+        <div className="login-form-title">
+          {isRegisterMode ? 'CREATE ACCOUNT' : 'INITIATE ACCESS'}
+        </div>
 
-        {/* Form */}
         <div className="login-form">
           <div className="login-field">
             <label className="login-label">HACKER ALIAS</label>
@@ -69,12 +71,34 @@ export default function Login({ onLogin, error }) {
 
           {error && <div className="login-error">{error}</div>}
 
-          <button className="login-btn" onClick={handleSubmit}>
-            BREACH THE SYSTEM
+          <button
+            className="login-btn"
+            onClick={handleSubmit}
+            disabled={isLoading}
+          >
+            {isLoading
+              ? 'CONNECTING...'
+              : isRegisterMode
+              ? 'REGISTER HACKER'
+              : 'BREACH THE SYSTEM'}
           </button>
 
           <div className="login-register">
-            No account? <span onClick={() => {}}>Register as new hacker</span>
+            {isRegisterMode ? (
+              <>
+                Already have an account?{' '}
+                <span onClick={() => { setIsRegisterMode(false); setUsername(''); setPassword(''); }}>
+                  Login here
+                </span>
+              </>
+            ) : (
+              <>
+                No account?{' '}
+                <span onClick={() => { setIsRegisterMode(true); setUsername(''); setPassword(''); }}>
+                  Register as new hacker
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>

@@ -6,10 +6,17 @@ const pool = require('../helpers/db');
 router.get('/', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM leaderboard LIMIT 20');
-    res.json({
-      success: true,
-      leaderboard: result.rows
-    });
+
+    const leaderboard = result.rows.map((row, index) => ({
+      rank: index + 1,
+      name: row.name,
+      rank_points: row.rank_points,
+      tokens: row.tokens,
+      puzzles_solved: row.puzzles_solved
+    }));
+
+    res.json({ success: true, leaderboard });
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: 'Server error' });

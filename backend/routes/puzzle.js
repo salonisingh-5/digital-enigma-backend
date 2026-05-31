@@ -4,68 +4,47 @@ const pool = require('../helpers/db');
 const { callEngine } = require('../helpers/callEngine');
 
 // POST /api/puzzle/submit
+// Body: { player_name, puzzle_id, flag, time_taken }
 router.post('/submit', async (req, res) => {
-  const { player_id, puzzle_id, flag, time_taken } = req.body;
+  const { player_name, puzzle_id, flag, time_taken } = req.body;
 
-  if (!player_id || !puzzle_id || !flag) {
-    return res.status(400).json({ success: false, message: 'Missing required fields' });
+  if (!player_name || !puzzle_id || !flag) {
+    return res.status(400).json({
+      success: false,
+      message: 'Missing required fields: player_name, puzzle_id, flag'
+    });
   }
 
   try {
-    // Get the puzzle's correct flag from DB
-    const puzzleResult = await pool.query('SELECT * FROM puzzles WHERE id = $1', [puzzle_id]);
-    if (puzzleResult.rows.length === 0) {
-      return res.status(404).json({ success: false, message: 'Puzzle not found' });
+    const engineResult = await callEngine([
+      'submit',
+      player_name,
+      String(puzzle_id),
+      flag,
+      String(time_taken || 0)
+    ]);
+
+    // C binary returns: { result: "correct"|"wrong"|"error", tokens, rank, message }
+    if (engineResult.result === 'error') {
+      return res.status(400).json({ success: false, message: engineResult.message });
     }
 
-    const puzzle = puzzleResult.rows[0];
-    const isCorrect = flag.trim().toLowerCase() === puzzle.flag.trim().toLowerCase();
-
-    // Get player info
-    const playerResult = await pool.query('SELECT * FROM players WHERE id = $1', [player_id]);
-    const player = playerResult.rows[0];
-
-    // Save attempt to DB
-    await pool.query(
-      'INSERT INTO attempts (player_id, puzzle_id, time_taken, solved) VALUES ($1, $2, $3, $4)',
-      [player_id, puzzle_id, time_taken || 0, isCorrect]
-    );
-
-    if (isCorrect) {
-      // Calculate rank points using the formula
-      const newPoints = (player.puzzles_solved + 1) * puzzle.difficulty - player.total_hints_used;
-      const safePoints = Math.max(newPoints, 0);
-
-      // Update player stats
-      await pool.query(
-        `UPDATE players SET 
-          puzzles_solved = puzzles_solved + 1,
-          rank_points = rank_points + $1
-         WHERE id = $2`,
-        [safePoints, player_id]
-      );
-
-      return res.json({
-        success: true,
-        correct: true,
-        message: 'Correct flag! Well done!',
-        points_earned: safePoints
-      });
-    } else {
-      return res.json({
-        success: true,
-        correct: false,
-        message: 'Wrong flag. Keep trying!'
-      });
-    }
+    return res.json({
+      success: true,
+      correct: engineResult.result === 'correct',
+      tokens: engineResult.tokens,
+      rank: engineResult.rank,
+      message: engineResult.message
+    });
 
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: 'Server error' });
+    console.error('Engine call failed:', err);
+    res.status(500).json({ success: false, message: 'Game engine error' });
   }
 });
 
-// GET /api/puzzle/:id — fetch a puzzle
+// GET /api/puzzle/:id
+// Never sends the flag to the client
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -76,7 +55,6 @@ router.get('/:id', async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).json({ success: false, message: 'Puzzle not found' });
     }
-    // Note: we don't send the flag back to the player!
     res.json({ success: true, puzzle: result.rows[0] });
   } catch (err) {
     console.error(err);

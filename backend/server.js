@@ -1,32 +1,28 @@
-const { execFile } = require("child_process");
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-require('dotenv').config();
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const app = express();
 
-app.use(cors());
-app.use(bodyParser.json());
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:3000'],
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
+app.use(express.json());
 
-// Import routes
-const puzzleRoutes = require('./routes/puzzle');
-const hintRoutes = require('./routes/hint');
-const leaderboardRoutes = require('./routes/leaderboard');
-const authRoutes = require('./routes/auth');
+app.use('/api/auth',        require('./routes/auth'));
+app.use('/api/puzzle',      require('./routes/puzzle'));
+app.use('/api/hint',        require('./routes/hint'));
+app.use('/api/leaderboard', require('./routes/leaderboard'));
 
-// Use routes
-app.use('/api/puzzle', puzzleRoutes);
-app.use('/api/hint', hintRoutes);
-app.use('/api/leaderboard', leaderboardRoutes);
-app.use('/api/auth', authRoutes);
-
-// Test route - just to check server is alive
-app.get('/', (req, res) => {
-  res.json({ message: 'Digital Enigma server is running!' });
+app.get('/api/health', (req, res) => {
+  res.json({ success: true, message: 'Digital Enigma backend running' });
 });
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.error(`Backend running on http://localhost:${PORT}`);
 });

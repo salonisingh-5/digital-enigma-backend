@@ -147,12 +147,17 @@
   cursor: pointer;
   transition: all 0.2s;
 }
-.login-btn:hover {
+.login-btn:hover:not(:disabled) {
   background: var(--neon-purple-bright);
   box-shadow: var(--glow-purple);
   transform: translateY(-1px);
 }
-.login-btn:active { transform: translateY(0); }
+.login-btn:active:not(:disabled) { transform: translateY(0); }
+.login-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
 
 .login-register {
   text-align: center;
